@@ -1,5 +1,8 @@
 var express = require('express');
+var cors = require('cors')
 var app = express();
+
+
 var routes = require('./api/routes/routes');
 var User = require('./api/models/userModel');
 
@@ -10,6 +13,7 @@ var port = process.env.PORT || 3000;
 var testUrl ='mongodb://localhost/usersdb';
 var prodUrl = 'mongodb://karbb:7WNmbaoWRJ3y76Ze@cluster0-shard-00-00-9g0i2.mongodb.net:27017,cluster0-shard-00-01-9g0i2.mongodb.net:27017,cluster0-shard-00-02-9g0i2.mongodb.net:27017/users?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
   
+ 
 mongoose.Promise = global.Promise;
 mongoose.connect(prodUrl, { useMongoClient: true }); 
 
@@ -22,17 +26,7 @@ db.once('open', () => {
   console.log('DB connected successfully!');
 });
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  if (req.method === 'Options') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, DELETE');
-    return res.status(200).json({});
-  }
-});
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
