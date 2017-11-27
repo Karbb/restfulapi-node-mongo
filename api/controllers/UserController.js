@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 exports.listAllUsers = function(req, res) {
-  User.find({}, function(err, task) {
+  User.find({}).sort({ score: -1 }).limit(10).select({ username: 1, score: 1 }), function(err, task) {
     if (err)
       res.send(err);
     res.json(task);
