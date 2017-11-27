@@ -4,7 +4,12 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 exports.listAllUsers = function(req, res) {
-  User.find({}, function(err, user) {
+  User.find({}, ['username','score'],
+{
+    sort:{
+        score: -1
+    }
+}, function(err, user) {
     if (err)
       res.send(err);
     res.json(user);
