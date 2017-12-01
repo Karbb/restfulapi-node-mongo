@@ -1,5 +1,6 @@
 var express = require('express');
-var cors = require('cors')
+var cors = require('cors');
+var jsonProp = require('./properties.json');
 var app = express();
 
 var routes = require('./api/routes/routes');
@@ -9,11 +10,9 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 var port = process.env.PORT || 3000;
-var testUrl ='mongodb://localhost/usersdb';
-var prodUrl = 'mongodb://karbb:7WNmbaoWRJ3y76Ze@cluster0-shard-00-00-9g0i2.mongodb.net:27017,cluster0-shard-00-01-9g0i2.mongodb.net:27017,cluster0-shard-00-02-9g0i2.mongodb.net:27017/users?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
   
 mongoose.Promise = global.Promise;
-mongoose.connect(prodUrl, { useMongoClient: true }); 
+mongoose.connect(jsonProp.mongo_prod, { useMongoClient: true }); 
 
 var db = mongoose.connection;
 
